@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Click the Button Game</title>
+  <!-- Link to external CSS file -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Click the Button Game</h1>
+    <p id="instructions">Click the button as many times as you can in 10 seconds!</p>
+    <p id="score">Score: 0</p>
+    <button id="clickButton">Click Me!</button>
+    <p id="timer">Time Left: 10 seconds</p>
+  </div>
+
+  <!-- JavaScript to handle game logic -->
+  <script>
+    // Variables to keep track of score and time
+    let score = 0;
+    let timeLeft = 10;
+    let isGameActive = false;
+
+    // Get references to elements
+    const scoreElement = document.getElementById('score');
+    const timerElement = document.getElementById('timer');
+    const clickButton = document.getElementById('clickButton');
+
+    // Function to start the game
+    function startGame() {
+      score = 0; // Reset score
+      timeLeft = 10; // Reset time
+      isGameActive = true; // Set game state to active
+      scoreElement.textContent = `Score: ${score}`;
+      timerElement.textContent = `Time Left: ${timeLeft} seconds`;
+
+      // Start countdown timer
+      const timerInterval = setInterval(() => {
+        timeLeft--;
+        timerElement.textContent = `Time Left: ${timeLeft} seconds`;
+
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval); // Stop timer
+          isGameActive = false; // Set game state to inactive
+          timerElement.textContent = "Game Over!";
+        }
+      }, 1000);
+    }
+
+    // Event listener for button click
+    clickButton.addEventListener('click', () => {
+      if (isGameActive) {
+        score++; // Increment score
+        scoreElement.textContent = `Score: ${score}`;
+      } else {
+        alert('Game is over! Refresh the page to play again.');
+      }
+    });
+
+    // Start the game when the page loads
+    window.onload = startGame;
+  </script>
+</body>
+</html>
